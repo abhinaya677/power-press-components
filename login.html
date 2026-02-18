@@ -20,7 +20,6 @@ body{
   background:linear-gradient(135deg,#f6cfcf,#ffffff);
 }
 
-/* MAIN CARD */
 .login-box{
   width:400px;
   background:#fff;
@@ -32,7 +31,6 @@ body{
   overflow:hidden;
 }
 
-/* TOP ACCENT BAR */
 .login-box::before{
   content:"";
   position:absolute;
@@ -55,7 +53,6 @@ h2{
   letter-spacing:1px;
 }
 
-/* INPUTS */
 .input-group{
   margin-bottom:22px;
 }
@@ -82,7 +79,6 @@ h2{
   box-shadow:0 0 0 2px rgba(177,18,23,.15);
 }
 
-/* BUTTON */
 button{
   width:100%;
   padding:14px;
@@ -101,7 +97,6 @@ button:hover{
   transform:translateY(-1px);
 }
 
-/* FOOTER TEXT */
 .footer-text{
   margin-top:22px;
   text-align:center;
@@ -134,12 +129,37 @@ button:hover{
 </div>
 
 <script>
-function login(){
-  // Front-end only
-  window.location.href = "index.html";
+async function login(){
+  const email = document.getElementById("username").value;
+  const password = document.getElementById("password").value;
+
+  if(!email || !password){
+    alert("Please enter both username and password");
+    return;
+  }
+
+  try {
+    const res = await fetch("https://power-press-components-backend.onrender.com/api/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password })
+    });
+
+    const result = await res.json();
+
+    if(result.success){
+      alert("Login successful!");
+      window.location.href = "index.html"; // redirect on success
+    } else {
+      alert(result.message || "Invalid credentials");
+    }
+
+  } catch(err){
+    console.error(err);
+    alert("Error connecting to server");
+  }
 }
 </script>
 
 </body>
 </html>
-
