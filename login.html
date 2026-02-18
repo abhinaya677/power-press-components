@@ -128,42 +128,49 @@ button:hover{
   </div>
 </div>
 
-<script>
-async function login() {
-  const username = document.getElementById("username").value;
-  const password = document.getElementById("password").value;
+<form id="loginForm">
+  <input type="text" name="username" placeholder="Username" required /><br/>
+  <input type="password" name="password" placeholder="Password" required /><br/>
+  <button type="submit">Login</button>
+</form>
+<p id="status"></p>
 
-  if(!username || !password){
-    alert("Please enter both username and password");
-    return;
-  }
+<script>
+const form = document.getElementById('loginForm');
+const status = document.getElementById('status');
+
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+
+  const data = {
+    username: form.username.value,
+    password: form.password.value
+  };
 
   try {
-    // Correct URL to match backend route
-    const res = await fetch("https://power-press-components-backend.onrender.com/api/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username, password })
+    const res = await fetch('/api/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
     });
 
     const result = await res.json();
-
-    if(result.success){
-      alert("Login successful!");
-      window.location.href = "index.html"; // redirect on success
+    if (res.ok) {
+      status.textContent = "✅ Logged in successfully!";
+      console.log('Token:', result.token); // save to localStorage if needed
     } else {
-      alert(result.message || "Invalid credentials");
+      status.textContent = "❌ " + result.error;
     }
-
-  } catch(err){
-    console.error(err);
-    alert("Error connecting to server");
+  } catch (err) {
+    status.textContent = "❌ Error: " + err.message;
   }
-}
+});
 </script>
+
 
 
 </body>
 </html>
+
 
 
