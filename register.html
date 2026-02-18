@@ -152,31 +152,34 @@ button:hover{
 </div>
 
 <script>
-async function register(){
+async function register() {
   const name = document.getElementById("name").value.trim();
   const email = document.getElementById("email").value.trim();
   const password = document.getElementById("password").value.trim();
   const confirmPassword = document.getElementById("confirmPassword").value.trim();
 
-  if(!name || !email || !password || !confirmPassword) return alert("Please fill all fields");
-  if(password !== confirmPassword) return alert("Passwords do not match");
+  if (!name || !email || !password || !confirmPassword)
+    return alert("Please fill all fields");
+  if (password !== confirmPassword) return alert("Passwords do not match");
 
   try {
     const res = await fetch("https://power-press-components-backend.onrender.com/api/register", {
-      method:"POST",
-      headers:{"Content-Type":"application/json"},
-      body:JSON.stringify({ name, email, password })
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name, email, password }), // frontend sends email
     });
+
     const result = await res.json();
-    if(result.success){
+    if (result.success) {
       alert("Registration successful! You can now login.");
-      window.location.href="login.html";
+      window.location.href = "login.html";
     } else alert(result.error || "Registration failed");
-  } catch(err){
+  } catch (err) {
     console.error(err);
-    alert("Error connecting to server");
+    alert("Error connecting to server: " + err.message);
   }
 }
+
 
 function showLogin(){
   window.location.href="login.html";
