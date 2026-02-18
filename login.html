@@ -4,186 +4,82 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Login | Power Press Components</title>
-
 <style>
-*{
-  box-sizing:border-box;
-  font-family:'Segoe UI', sans-serif;
-}
-
-body{
-  margin:0;
-  height:100vh;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background:linear-gradient(135deg,#f6cfcf,#ffffff);
-}
-
-.login-box{
-  width:400px;
-  background:#fff;
-  padding:45px 40px;
-  border-radius:18px;
-  box-shadow:0 25px 45px rgba(0,0,0,.25);
-  position:relative;
-  overflow:hidden;
-}
-
-.login-box::before{
-  content:"";
-  position:absolute;
-  top:0;
-  left:0;
-  width:100%;
-  height:6px;
-  background:linear-gradient(to right,#b11217,#8e0f14);
-}
-
-h2{
-  text-align:center;
-  margin-bottom:30px;
-  color:#b11217;
-  letter-spacing:1px;
-}
-
-.input-group{
-  margin-bottom:15px;
-  position:relative;
-}
-
-.input-group label{
-  position:absolute;
-  left:12px;
-  top:14px;
-  font-size:14px;
-  color:#888;
-  transition:.2s;
-  pointer-events:none;
-}
-
-.input-group input{
-  width:100%;
-  padding:14px 12px;
-  border-radius:10px;
-  border:1.5px solid #ccc;
-  outline:none;
-  font-size:14px;
-}
-
-.input-group input:focus{
-  border-color:#b11217;
-  box-shadow:0 0 0 2px rgba(177,18,23,.15);
-}
-
+*{ box-sizing:border-box; font-family:'Segoe UI', sans-serif;}
+body{ margin:0; height:100vh; display:flex; align-items:center; justify-content:center; background:linear-gradient(135deg,#f6cfcf,#ffffff);}
+.login-box{ width:400px; background:#fff; padding:45px 40px; border-radius:18px; box-shadow:0 25px 45px rgba(0,0,0,.25); position:relative; overflow:hidden;}
+.login-box::before{ content:""; position:absolute; top:0; left:0; width:100%; height:6px; background:linear-gradient(to right,#b11217,#8e0f14);}
+h2{text-align:center; margin-bottom:30px; color:#b11217; letter-spacing:1px;}
+.input-group{ margin-bottom:15px; position:relative;}
+.input-group label{ position:absolute; left:12px; top:14px; font-size:14px; color:#888; transition:.2s; pointer-events:none;}
+.input-group input{ width:100%; padding:14px 12px; border-radius:10px; border:1.5px solid #ccc; outline:none; font-size:14px;}
+.input-group input:focus{ border-color:#b11217; box-shadow:0 0 0 2px rgba(177,18,23,.15);}
 .input-group input:focus + label,
-.input-group input:not(:placeholder-shown) + label{
-  top:-8px;
-  left:10px;
-  font-size:12px;
-  background:#fff;
-  padding:0 4px;
-  color:#b11217;
-}
-
-.remember-forgot{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin-bottom:20px;
-  font-size:13px;
-}
-
-.remember-forgot label{
-  display:flex;
-  align-items:center;
-  cursor:pointer;
-}
-
-.remember-forgot input{
-  margin-right:5px;
-}
-
-button{
-  width:100%;
-  padding:14px;
-  border:none;
-  border-radius:30px;
-  background:linear-gradient(to right,#b11217,#8e0f14);
-  color:#fff;
-  font-size:16px;
-  font-weight:600;
-  cursor:pointer;
-  transition:.3s;
-}
-
-button:hover{
-  opacity:.9;
-  transform:translateY(-1px);
-}
-
-.footer-text{
-  margin-top:22px;
-  text-align:center;
-  font-size:13px;
-  color:#777;
-}
-
-.footer-text span{
-  color:#b11217;
-  cursor:pointer;
-  font-weight:600;
-}
+.input-group input:not(:placeholder-shown) + label{ top:-8px; left:10px; font-size:12px; background:#fff; padding:0 4px; color:#b11217;}
+.remember-forgot{ display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; font-size:13px;}
+.remember-forgot label{ display:flex; align-items:center; cursor:pointer;}
+.remember-forgot input{ margin-right:5px;}
+button{ width:100%; padding:14px; border:none; border-radius:30px; background:linear-gradient(to right,#b11217,#8e0f14); color:#fff; font-size:16px; font-weight:600; cursor:pointer; transition:.3s;}
+button:hover{ opacity:.9; transform:translateY(-1px);}
+.footer-text{ margin-top:22px; text-align:center; font-size:13px; color:#777;}
+.footer-text span{ color:#b11217; cursor:pointer; font-weight:600;}
 </style>
 </head>
-
 <body>
 
 <div class="login-box">
   <h2>LOGIN</h2>
 
   <div class="input-group">
-  <input type="text" id="username" placeholder=" " required>
-  <label>Username</label>
+    <input type="text" id="username" placeholder=" " required>
+    <label>Username</label>
+  </div>
+
+  <div class="input-group">
+    <input type="password" id="password" placeholder=" " required>
+    <label>Password</label>
+  </div>
+
+  <div class="remember-forgot">
+    <label><input type="checkbox" id="remember">Remember Me</label>
+    <a href="#" style="color:#b11217; text-decoration:none; font-size:13px;">Forgot Password?</a>
+  </div>
+
+  <button onclick="login()">Login</button>
+
+  <div class="footer-text">
+    Don't have an account? <span onclick="showRegister()">Register</span>
+  </div>
 </div>
-<div class="input-group">
-  <input type="password" id="password" placeholder=" " required>
-  <label>Password</label>
-</div>
-<button onclick="login()">Login</button>
 
 <script>
-async function login() {
+async function login(){
   const username = document.getElementById("username").value.trim();
   const password = document.getElementById("password").value.trim();
-
-  if(!username || !password) return alert("Please fill all fields");
+  if(!username || !password) return alert("Please enter both username and password");
 
   try {
     const res = await fetch("https://power-press-components-backend.onrender.com/api/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username, password })
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({ username, password })
     });
-
     const result = await res.json();
     if(result.success){
       alert("Login successful!");
-      // redirect to dashboard or home page
-      window.location.href = "index.html";
-    } else {
-      alert(result.error || "Login failed");
-    }
+      window.location.href="index.html";
+    } else alert(result.error || "Invalid credentials");
   } catch(err){
     console.error(err);
-    alert("Server error: " + err.message);
+    alert("Error connecting to server");
   }
+}
+
+// Redirect to register page
+function showRegister(){
+  window.location.href="register.html";
 }
 </script>
 
-
-
 </body>
 </html>
-
-
