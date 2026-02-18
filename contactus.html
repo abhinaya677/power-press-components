@@ -179,7 +179,9 @@ document.getElementById("contactForm").addEventListener("submit", async function
 
   try {
     // Correct URL to match backend route
-    const res = await fetch("https://power-press-components-backend.onrender.com/contact", {
+    const res = await fetch("https://power-press-components-backend.onrender.com/api/contact", {
+
+     
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data)
@@ -197,5 +199,6 @@ document.getElementById("contactForm").addEventListener("submit", async function
 
 </body>
 </html>
+
 
 
