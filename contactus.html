@@ -172,33 +172,42 @@ document.getElementById("contactForm").addEventListener("submit", async function
   e.preventDefault();
 
   const data = {
-    name: this.name.value,
-    email: this.email.value,
-    message: this.message.value
+    name: this.name.value.trim(),
+    email: this.email.value.trim(),
+    message: this.message.value.trim()
   };
 
-  try {
-    // Correct URL to match backend route
-    const res = await fetch("https://power-press-components-backend.onrender.com/api/contact", {
+  if (!data.name || !data.email || !data.message) {
+    alert("All fields are required!");
+    return;
+  }
 
-     
+  try {
+    const res = await fetch("https://power-press-components-backend.onrender.com/api/contact", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data)
     });
 
     const result = await res.json();
-    alert(result.message);   // show success/failure
-    this.reset();            // clear form
+    if(result.success) {
+      alert("Message sent successfully!");
+      this.reset();
+    } else {
+      alert(result.error || "Failed to send message");
+    }
+
   } catch (err) {
     console.error(err);
-    alert("Error submitting form");
+    alert("Error submitting form. Check console for details.");
   }
 });
 </script>
 
+
 </body>
 </html>
+
 
 
 
