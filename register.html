@@ -166,25 +166,36 @@ async function register() {
     const res = await fetch("https://power-press-components-backend.onrender.com/api/register", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name, email, password }), // frontend sends email
+      body: JSON.stringify({ name, email, password }),
     });
 
-    const result = await res.json();
+    // Always parse safely
+    const text = await res.text(); // get raw response
+    let result;
+    try {
+      result = JSON.parse(text); // try parsing JSON
+    } catch {
+      console.error("Non-JSON response:", text);
+      return alert("Server error: invalid response");
+    }
+
     if (result.success) {
       alert("Registration successful! You can now login.");
       window.location.href = "login.html";
-    } else alert(result.error || "Registration failed");
+    } else {
+      alert(result.error || "Registration failed");
+    }
   } catch (err) {
     console.error(err);
     alert("Error connecting to server: " + err.message);
   }
 }
 
-
-function showLogin(){
-  window.location.href="login.html";
+function showLogin() {
+  window.location.href = "login.html";
 }
 </script>
+
 
 </body>
 </html>
