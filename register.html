@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Register | Power Press Components</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  font-family:'Segoe UI', sans-serif;
+}
+
+body{
+  margin:0;
+  height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:linear-gradient(135deg,#f6cfcf,#ffffff);
+}
+
+.login-box{
+  width:400px;
+  background:#fff;
+  padding:45px 40px;
+  border-radius:18px;
+  box-shadow:0 25px 45px rgba(0,0,0,.25);
+  position:relative;
+  overflow:hidden;
+}
+
+.login-box::before{
+  content:"";
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:6px;
+  background:linear-gradient(to right,#b11217,#8e0f14);
+}
+
+h2{
+  text-align:center;
+  margin-bottom:30px;
+  color:#b11217;
+  letter-spacing:1px;
+}
+
+.input-group{
+  margin-bottom:15px;
+  position:relative;
+}
+
+.input-group label{
+  position:absolute;
+  left:12px;
+  top:14px;
+  font-size:14px;
+  color:#888;
+  transition:.2s;
+  pointer-events:none;
+}
+
+.input-group input{
+  width:100%;
+  padding:14px 12px;
+  border-radius:10px;
+  border:1.5px solid #ccc;
+  outline:none;
+  font-size:14px;
+}
+
+.input-group input:focus{
+  border-color:#b11217;
+  box-shadow:0 0 0 2px rgba(177,18,23,.15);
+}
+
+.input-group input:focus + label,
+.input-group input:not(:placeholder-shown) + label{
+  top:-8px;
+  left:10px;
+  font-size:12px;
+  background:#fff;
+  padding:0 4px;
+  color:#b11217;
+}
+
+button{
+  width:100%;
+  padding:14px;
+  border:none;
+  border-radius:30px;
+  background:linear-gradient(to right,#b11217,#8e0f14);
+  color:#fff;
+  font-size:16px;
+  font-weight:600;
+  cursor:pointer;
+  transition:.3s;
+}
+
+button:hover{
+  opacity:.9;
+  transform:translateY(-1px);
+}
+
+.footer-text{
+  margin-top:22px;
+  text-align:center;
+  font-size:13px;
+  color:#777;
+}
+
+.footer-text span{
+  color:#b11217;
+  cursor:pointer;
+  font-weight:600;
+}
+</style>
+</head>
+
+<body>
+
+<div class="login-box">
+  <h2>REGISTER</h2>
+
+  <div class="input-group">
+    <input type="text" id="name" placeholder=" ">
+    <label>Full Name</label>
+  </div>
+
+  <div class="input-group">
+    <input type="email" id="email" placeholder=" ">
+    <label>Email</label>
+  </div>
+
+  <div class="input-group">
+    <input type="password" id="password" placeholder=" ">
+    <label>Password</label>
+  </div>
+
+  <div class="input-group">
+    <input type="password" id="confirmPassword" placeholder=" ">
+    <label>Confirm Password</label>
+  </div>
+
+  <button onclick="register()">Register</button>
+
+  <div class="footer-text">
+    Already have an account? <span onclick="showLogin()">Login</span>
+  </div>
+</div>
+
+<script>
+async function register(){
+  const name = document.getElementById("name").value.trim();
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value.trim();
+  const confirmPassword = document.getElementById("confirmPassword").value.trim();
+
+  if(!name || !email || !password || !confirmPassword) return alert("Please fill all fields");
+  if(password !== confirmPassword) return alert("Passwords do not match");
+
+  try {
+    const res = await fetch("https://power-press-components-backend.onrender.com/api/register", {
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({ name, email, password })
+    });
+    const result = await res.json();
+    if(result.success){
+      alert("Registration successful! You can now login.");
+      window.location.href="login.html";
+    } else alert(result.error || "Registration failed");
+  } catch(err){
+    console.error(err);
+    alert("Error connecting to server");
+  }
+}
+
+function showLogin(){
+  window.location.href="login.html";
+}
+</script>
+
+</body>
+</html>
