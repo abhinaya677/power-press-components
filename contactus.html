@@ -12,11 +12,9 @@
 
 <!-- Font Awesome -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
 <!-- Custom CSS -->
 <link rel="stylesheet" href="contactus.css">
-
 </head>
 <body>
 
@@ -57,9 +55,8 @@
         <li><a href="pro1.html">METAL CUP ONE 7/8 INCH</a></li>
       </ul>
     </li>
-   
     <li><a href="contactus.html">CONTACT US</a></li>
-   <li><a href="login.html">LOGIN</a></li>
+    <li><a href="login.html">LOGIN</a></li>
   </ul>
   <div class="quote">
     <a href="index.html">GET A QUOTE</a>
@@ -71,9 +68,6 @@
     <h1>CONTACT US</h1>
 </div>
 
-<br><br>
-
-
 <section class="contact-info-section">
   <div class="contact-grid">
 
@@ -82,11 +76,7 @@
         <i class="fa-solid fa-industry"></i>
       </div>
       <h3>Visit Us</h3>
-      <p>
-       APR Tooling
-Ganapathy, Coimbatore
-Tamil Nadu, India
-      </p>
+      <p>APR Tooling<br>Ganapathy, Coimbatore<br>Tamil Nadu, India</p>
     </div>
 
     <div class="contact-box">
@@ -96,8 +86,7 @@ Tamil Nadu, India
       <h3>Mail Us</h3>
       <p class="highlight">
         <a href="mailto:info@aprtoolingpowerpress.com">info@aprtoolingpowerpress.com</a><br>
-<a href="mailto:info@abhinaya094.com">info@abhinaya094.com</a><br>
-        
+        <a href="mailto:info@abhinaya094.com">info@abhinaya094.com</a>
       </p>
     </div>
 
@@ -119,41 +108,33 @@ Tamil Nadu, India
       <h3>Phone</h3>
       <p>
         <a href="tel:+91 9843051993">+91 9843051993</a><br>
-<a href="tel:+91 8111035070">+91 8111035070</a><br>
-
-       
+        <a href="tel:+91 8111035070">+91 8111035070</a>
       </p>
     </div>
 
   </div>
 </section>
-<br><section class="contact-form-section">
+
+<section class="contact-form-section">
   <div class="contact-form-container">
     <h2>Contact Us</h2>
     <p class="form-subtitle">We’d love to hear from you</p>
 
-    <form action="/submit" method="POST">
-  <input type="text" name="name" placeholder="Name" required>
-  <input type="email" name="email" placeholder="Email" required>
-  <textarea name="message" placeholder="Message"></textarea>
-  <button type="submit">Send</button>
-</form>
-
-
+    <form id="contactForm">
+      <input type="text" name="name" placeholder="Name" required>
+      <input type="email" name="email" placeholder="Email" required>
+      <textarea name="message" placeholder="Message"></textarea>
+      <button type="submit">Send</button>
+    </form>
   </div>
 </section>
 
-<br>
-<!-- Replace the code below with the code you copied from Google Maps -->
+<!-- GOOGLE MAP -->
 <section class="map-section">
   <iframe src="https://maps.google.com/maps?q=11.0403333,76.9703333&hl=en&z=17&output=embed"
-    loading="lazy"
-    referrerpolicy="no-referrer-when-downgrade">
+    loading="lazy" referrerpolicy="no-referrer-when-downgrade">
   </iframe>
 </section>
-
-
-
 
 <!-- FOOTER -->
 <footer class="site-footer">
@@ -185,6 +166,33 @@ Tamil Nadu, India
   </div>
 </footer>
 
+<!-- JS for AJAX form submission -->
+<script>
+document.getElementById("contactForm").addEventListener("submit", async function(e) {
+  e.preventDefault();
+
+  const data = {
+    name: this.name.value,
+    email: this.email.value,
+    message: this.message.value
+  };
+
+  try {
+    const res = await fetch("/contact", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data)
+    });
+
+    const text = await res.text();
+    alert(text);       // show success/failure
+    this.reset();      // clear form
+  } catch (err) {
+    console.error(err);
+    alert("Error submitting form");
+  }
+});
+</script>
+
 </body>
 </html>
-
