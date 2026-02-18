@@ -178,15 +178,16 @@ document.getElementById("contactForm").addEventListener("submit", async function
   };
 
   try {
-    const res = await fetch("/contact", {
+    // Use Render backend URL
+    const res = await fetch("https://power-press-components-backend.onrender.com/api/contact", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data)
     });
 
-    const text = await res.text();
-    alert(text);       // show success/failure
-    this.reset();      // clear form
+    const result = await res.json();
+    alert(result.message);   // show success/failure
+    this.reset();            // clear form
   } catch (err) {
     console.error(err);
     alert("Error submitting form");
@@ -196,3 +197,4 @@ document.getElementById("contactForm").addEventListener("submit", async function
 
 </body>
 </html>
+
